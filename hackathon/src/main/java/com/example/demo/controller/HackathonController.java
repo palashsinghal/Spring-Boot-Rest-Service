@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.UserProfile;
 import com.example.demo.service.HackathonServiceImpl;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 
-@RequestMapping("/v2.0/restcontroller")
+@RequestMapping("/v2.0/restcontroller/userProfile")
 public class HackathonController {
 	
 	@Autowired
 	HackathonServiceImpl hackathonServiceImpl;
 	
+	@ApiOperation(value = "Add a new User")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity getAllProfiles(){
 		return new ResponseEntity(hackathonServiceImpl.getAllProfiles(), HttpStatus.OK);
@@ -38,7 +41,26 @@ public class HackathonController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity saveProfile(RequestEntity<UserProfile> userProfile) {		
-			return new ResponseEntity(hackathonServiceImpl.addUpdateProfile(userProfile.getBody()),HttpStatus.OK);		
+		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+	      String email1 = userProfile.getBody().getUserId();
+	      String name = userProfile.getBody().getName();
+	      if(!(email1.isEmpty()||name.isEmpty()))
+	      {
+	    	  Boolean b = email1.matches(EMAIL_REGEX);
+	    	  if(b)
+	    	  {
+	    		  return new ResponseEntity(hackathonServiceImpl.addUpdateProfile(userProfile.getBody()),HttpStatus.OK);
+	    	  }
+	    	  else
+	    	  {
+	    		  return new ResponseEntity("Please Enter Correct Email ID",HttpStatus.CONFLICT);
+	    	  }
+	      }
+	      
+	      else
+	      {
+	    	  return new ResponseEntity("Please Enter the Required Values",HttpStatus.CONFLICT);
+	      }			
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)

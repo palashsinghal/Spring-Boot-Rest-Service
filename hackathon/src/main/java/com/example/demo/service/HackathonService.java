@@ -8,6 +8,6 @@ public interface HackathonService {
 	
 	public List<UserProfile> getAllProfiles();
 	public UserProfile getProfileById(int id);
-	public String addUpdateProfile(UserProfile userProfile);
+	public UserProfile addUpdateProfile(UserProfile userProfile);
 	public String deleteProfile(int id);
 }

@@ -33,9 +33,9 @@ public class HackathonServiceImpl implements HackathonService {
 	}
 
 	@Override
-	public String addUpdateProfile(UserProfile userProfile) {
+	public UserProfile addUpdateProfile(UserProfile userProfile) {
 		 userRepository.save(userProfile);
-		return "Profile Saved";
+		return userProfile;
 	}
 
 	@Override

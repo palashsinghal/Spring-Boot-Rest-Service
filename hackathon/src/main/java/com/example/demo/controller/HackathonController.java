@@ -2,10 +2,14 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +37,8 @@ public class HackathonController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity saveProfile(RequestEntity<UserProfile> userProfile) {
-		return new ResponseEntity(hackathonServiceImpl.addUpdateProfile(userProfile.getBody()),HttpStatus.OK);
+	public ResponseEntity saveProfile(RequestEntity<UserProfile> userProfile) {		
+			return new ResponseEntity(hackathonServiceImpl.addUpdateProfile(userProfile.getBody()),HttpStatus.OK);		
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
